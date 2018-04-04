@@ -17,6 +17,9 @@ limitations under the License.
 package rest
 
 import (
+	"crypto/x509"
+	"encoding/pem"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -32,8 +35,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	clientcmdapi "k8s.io/go/tools/clientcmd/api"
-	certutil "k8s.io/go/util/cert"
-	"k8s.io/go/util/flowcontrol"
 )
 
 const (
@@ -100,9 +101,6 @@ type Config struct {
 	// Maximum burst for throttle.
 	// If it's zero, the created RESTClient will use DefaultBurst: 10.
 	Burst int
-
-	// Rate limiter for limiting connections to the master from this client. If present overwrites QPS/Burst
-	RateLimiter flowcontrol.RateLimiter
 
 	// The maximum length of time to wait before giving up on a server request. A value of zero means no timeout.
 	Timeout time.Duration
@@ -246,7 +244,7 @@ func InClusterConfig() (*Config, error) {
 	}
 	tlsClientConfig := TLSClientConfig{}
 	rootCAFile := "/var/run/secrets/kubernetes.io/serviceaccount/" + v1.ServiceAccountRootCAKey
-	if _, err := certutil.NewPool(rootCAFile); err != nil {
+	if err = verifyCAConfig(rootCAFile); err != nil {
 		glog.Errorf("Expected to load root CA config from %s, but got err: %v", rootCAFile, err)
 	} else {
 		tlsClientConfig.CAFile = rootCAFile
@@ -258,6 +256,46 @@ func InClusterConfig() (*Config, error) {
 		BearerToken:     string(token),
 		TLSClientConfig: tlsClientConfig,
 	}, nil
+}
+
+func verifyCAConfig(file string) error {
+	pemBlock, err := ioutil.ReadFile(file)
+	if err != nil {
+		return err
+	}
+	_, err = parseCertsPEM(pemBlock)
+	return err
+}
+
+// parseCertsPEM returns the x509.Certificates contained in the given PEM-encoded byte array
+// Returns an error if a certificate could not be parsed, or if the data does not contain any certificates
+func parseCertsPEM(pemCerts []byte) ([]*x509.Certificate, error) {
+	ok := false
+	certs := []*x509.Certificate{}
+	for len(pemCerts) > 0 {
+		var block *pem.Block
+		block, pemCerts = pem.Decode(pemCerts)
+		if block == nil {
+			break
+		}
+		// Only use PEM "CERTIFICATE" blocks without extra headers
+		if block.Type != "CERTIFICATE" || len(block.Headers) != 0 {
+			continue
+		}
+
+		cert, err := x509.ParseCertificate(block.Bytes)
+		if err != nil {
+			return certs, err
+		}
+
+		certs = append(certs, cert)
+		ok = true
+	}
+
+	if !ok {
+		return certs, errors.New("data does not contain any valid RSA or ECDSA certificates")
+	}
+	return certs, nil
 }
 
 // IsConfigTransportTLS returns true if and only if the provided
@@ -332,7 +370,6 @@ func AnonymousClientConfig(config *Config) *Config {
 			CAFile:     config.TLSClientConfig.CAFile,
 			CAData:     config.TLSClientConfig.CAData,
 		},
-		RateLimiter:   config.RateLimiter,
 		UserAgent:     config.UserAgent,
 		Transport:     config.Transport,
 		WrapTransport: config.WrapTransport,
@@ -375,7 +412,6 @@ func CopyConfig(config *Config) *Config {
 		WrapTransport: config.WrapTransport,
 		QPS:           config.QPS,
 		Burst:         config.Burst,
-		RateLimiter:   config.RateLimiter,
 		Timeout:       config.Timeout,
 		Dial:          config.Dial,
 	}

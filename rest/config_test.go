@@ -33,7 +33,6 @@ import (
 	"k8s.io/apimachinery/pkg/util/diff"
 	"k8s.io/go/kubernetes/scheme"
 	clientcmdapi "k8s.io/go/tools/clientcmd/api"
-	"k8s.io/go/util/flowcontrol"
 
 	"errors"
 
@@ -242,11 +241,6 @@ func TestAnonymousConfig(t *testing.T) {
 			f.Fuzz(serializer)
 			*r = serializer
 		},
-		func(r *flowcontrol.RateLimiter, f fuzz.Continue) {
-			limiter := &fakeLimiter{}
-			f.Fuzz(limiter)
-			*r = limiter
-		},
 		// Authentication does not require fuzzer
 		func(r *AuthProviderConfigPersister, f fuzz.Continue) {},
 		func(r *clientcmdapi.AuthProviderConfig, f fuzz.Continue) {
@@ -320,11 +314,6 @@ func TestCopyConfig(t *testing.T) {
 			serializer := &fakeNegotiatedSerializer{}
 			f.Fuzz(serializer)
 			*r = serializer
-		},
-		func(r *flowcontrol.RateLimiter, f fuzz.Continue) {
-			limiter := &fakeLimiter{}
-			f.Fuzz(limiter)
-			*r = limiter
 		},
 		func(r *AuthProviderConfigPersister, f fuzz.Continue) {
 			*r = fakeAuthProviderConfigPersister{}
