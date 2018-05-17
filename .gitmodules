@@ -1,0 +1,3 @@
+[submodule "kubernetes/base"]
+	path = kubernetes/base
+	url = git@github.com:kubernetes-client/go-base.git
