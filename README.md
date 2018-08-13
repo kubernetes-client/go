@@ -46,5 +46,6 @@ Key:
 * `-` The Kubernetes cluster has features the client-python library can't use
   (additional API objects, etc).
 
+## Contributing
 
-
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for instructions on how to contribute.
