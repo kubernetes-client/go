@@ -39,11 +39,11 @@ supported versions of Kubernetes clusters.
 
 Key:
 
-* `✓` Exactly the same features / API objects in both client-python and the Kubernetes
+* `✓` Exactly the same features / API objects in both Go client and the Kubernetes
   version.
-* `+` client-python has features or api objects that may not be present in the
+* `+` Go client has features or api objects that may not be present in the
   Kubernetes cluster, but everything they have in common will work.
-* `-` The Kubernetes cluster has features the client-python library can't use
+* `-` The Kubernetes cluster has features the Go client library can't use
   (additional API objects, etc).
 
 ## Contributing
