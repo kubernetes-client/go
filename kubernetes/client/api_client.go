@@ -184,6 +184,9 @@ func selectHeaderContentType(contentTypes []string) string {
 	if contains(contentTypes, "application/json") {
 		return "application/json"
 	}
+	if contains(contentTypes, "*/*") {
+		return "application/json"
+	}
 	return contentTypes[0] // use the first content type specified in 'consumes'
 }
 
