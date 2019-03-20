@@ -3,12 +3,15 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Group** | **string** | Group is the group this resource belongs in | [default to null]
-**Names** | [***V1beta1CustomResourceDefinitionNames**](v1beta1.CustomResourceDefinitionNames.md) | Names are the names used to describe this custom resource | [default to null]
-**Scope** | **string** | Scope indicates whether this resource is cluster or namespace scoped.  Default is namespaced | [default to null]
-**Subresources** | [***V1beta1CustomResourceSubresources**](v1beta1.CustomResourceSubresources.md) | Subresources describes the subresources for CustomResources This field is alpha-level and should only be sent to servers that enable subresources via the CustomResourceSubresources feature gate. | [optional] [default to null]
-**Validation** | [***V1beta1CustomResourceValidation**](v1beta1.CustomResourceValidation.md) | Validation describes the validation methods for CustomResources | [optional] [default to null]
-**Version** | **string** | Version is the version this resource belongs in | [default to null]
+**AdditionalPrinterColumns** | [**[]V1beta1CustomResourceColumnDefinition**](v1beta1.CustomResourceColumnDefinition.md) | AdditionalPrinterColumns are additional columns shown e.g. in kubectl next to the name. Defaults to a created-at column. Optional, the global columns for all versions. Top-level and per-version columns are mutually exclusive. | [optional] 
+**Conversion** | [**V1beta1CustomResourceConversion**](v1beta1.CustomResourceConversion.md) |  | [optional] 
+**Group** | **string** | Group is the group this resource belongs in | 
+**Names** | [**V1beta1CustomResourceDefinitionNames**](v1beta1.CustomResourceDefinitionNames.md) |  | 
+**Scope** | **string** | Scope indicates whether this resource is cluster or namespace scoped.  Default is namespaced | 
+**Subresources** | [**V1beta1CustomResourceSubresources**](v1beta1.CustomResourceSubresources.md) |  | [optional] 
+**Validation** | [**V1beta1CustomResourceValidation**](v1beta1.CustomResourceValidation.md) |  | [optional] 
+**Version** | **string** | Version is the version this resource belongs in Should be always first item in Versions field if provided. Optional, but at least one of Version or Versions must be set. Deprecated: Please use &#x60;Versions&#x60;. | [optional] 
+**Versions** | [**[]V1beta1CustomResourceDefinitionVersion**](v1beta1.CustomResourceDefinitionVersion.md) | Versions is the list of all supported versions for this resource. If Version field is provided, this field is optional. Validation: All versions must use the same validation schema for now. i.e., top level Validation field is applied to all of these versions. Order: The version name will be used to compute the order. If the version string is \&quot;kube-like\&quot;, it will sort above non \&quot;kube-like\&quot; version strings, which are ordered lexicographically. \&quot;Kube-like\&quot; versions start with a \&quot;v\&quot;, then are followed by a number (the major version), then optionally the string \&quot;alpha\&quot; or \&quot;beta\&quot; and another number (the minor version). These are sorted first by GA &gt; beta &gt; alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
