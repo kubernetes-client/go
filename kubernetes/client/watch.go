@@ -23,6 +23,7 @@ type WatchClient struct {
 	MakerFn func() interface{}
 }
 
+// Connect initiates a watch to the server.  TODO: support watch from resource version
 func (w *WatchClient) Connect(ctx context.Context) (<-chan *Result, <-chan error, error) {
 	url := w.Cfg.Scheme + "://" + w.Cfg.Host + w.Path + "?watch=true"
 	req, err := w.Client.prepareRequest(ctx, url, "GET", nil, nil, nil, nil, "", []byte{})
@@ -36,8 +37,8 @@ func (w *WatchClient) Connect(ctx context.Context) (<-chan *Result, <-chan error
 	if res.StatusCode != 200 {
 		return nil, nil, fmt.Errorf("Error connecting watch (%d: %s)", res.StatusCode, res.Status)
 	}
-	resultChan := make(chan *Result)
-	errChan := make(chan error)
+	resultChan := make(chan *Result, 1)
+	errChan := make(chan error, 1)
 	processWatch(res.Body, w.MakerFn, resultChan, errChan)
 	return resultChan, errChan, nil
 }
@@ -67,6 +68,7 @@ func decode(line string, makerFn func() interface{}) (*Result, error) {
 	if len(line) == 0 {
 		return nil, nil
 	}
+	// TODO: support protocol buffer encoding?
 	decoder := json.NewDecoder(strings.NewReader(line))
 	result := &Result{}
 	for decoder.More() {
