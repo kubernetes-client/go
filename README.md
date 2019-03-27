@@ -33,9 +33,11 @@ supported versions of Kubernetes clusters.
 
 #### Compatibility matrix
 
-|                  | Kubernetes 1.10 |
-|------------------|-----------------|
-| client 0.1.0a1   | ✓               |
+|                  | Kubernetes 1.10 | Kubernetes 1.13 |
+|------------------|-----------------|-----------------|
+| client 0.1.0a1   | ✓               |                 |
+|------------------|-----------------|-----------------|
+| client 0.2.0a1   |                 | ✓               |
 
 Key:
 
@@ -45,6 +47,17 @@ Key:
   Kubernetes cluster, but everything they have in common will work.
 * `-` The Kubernetes cluster has features the Go client library can't use
   (additional API objects, etc).
+
+### Generatic code
+
+Check out `https://github.com/kubernetes-client/gen` into `${GEN_DIR}`.
+
+Assume that `https://github.com/kubernetes-client/go` is in `${GO_DIR}`.
+
+```sh
+cd ${GO_DIR}/kubernetes
+${GEN_DIR}/openapi/go.sh ./ ./settings
+```
 
 ## Contributing
 

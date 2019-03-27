@@ -1,6 +1,6 @@
 # \AuthorizationV1beta1Api
 
-All URIs are relative to *https://localhost*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -21,19 +21,21 @@ create a LocalSubjectAccessReview
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **namespace** | **string**| object name and auth scope, such as for teams and projects | 
   **body** | [**V1beta1LocalSubjectAccessReview**](V1beta1LocalSubjectAccessReview.md)|  | 
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
+ **optional** | ***CreateNamespacedLocalSubjectAccessReviewOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
+Optional parameters are passed through a pointer to a CreateNamespacedLocalSubjectAccessReviewOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **namespace** | **string**| object name and auth scope, such as for teams and projects | 
- **body** | [**V1beta1LocalSubjectAccessReview**](V1beta1LocalSubjectAccessReview.md)|  | 
- **pretty** | **string**| If &#39;true&#39;, then the output is pretty printed. | 
+
+
+ **dryRun** | **optional.String**| When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | 
+ **includeUninitialized** | **optional.Bool**| If IncludeUninitialized is specified, the object may be returned without completing initialization. | 
+ **pretty** | **optional.String**| If &#39;true&#39;, then the output is pretty printed. | 
 
 ### Return type
 
@@ -45,7 +47,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: Not defined
  - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -60,17 +62,19 @@ create a SelfSubjectAccessReview
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**V1beta1SelfSubjectAccessReview**](V1beta1SelfSubjectAccessReview.md)|  | 
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
+ **optional** | ***CreateSelfSubjectAccessReviewOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
+Optional parameters are passed through a pointer to a CreateSelfSubjectAccessReviewOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**V1beta1SelfSubjectAccessReview**](V1beta1SelfSubjectAccessReview.md)|  | 
- **pretty** | **string**| If &#39;true&#39;, then the output is pretty printed. | 
+
+ **dryRun** | **optional.String**| When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | 
+ **includeUninitialized** | **optional.Bool**| If IncludeUninitialized is specified, the object may be returned without completing initialization. | 
+ **pretty** | **optional.String**| If &#39;true&#39;, then the output is pretty printed. | 
 
 ### Return type
 
@@ -82,7 +86,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: Not defined
  - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -97,17 +101,19 @@ create a SelfSubjectRulesReview
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**V1beta1SelfSubjectRulesReview**](V1beta1SelfSubjectRulesReview.md)|  | 
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
+ **optional** | ***CreateSelfSubjectRulesReviewOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
+Optional parameters are passed through a pointer to a CreateSelfSubjectRulesReviewOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**V1beta1SelfSubjectRulesReview**](V1beta1SelfSubjectRulesReview.md)|  | 
- **pretty** | **string**| If &#39;true&#39;, then the output is pretty printed. | 
+
+ **dryRun** | **optional.String**| When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | 
+ **includeUninitialized** | **optional.Bool**| If IncludeUninitialized is specified, the object may be returned without completing initialization. | 
+ **pretty** | **optional.String**| If &#39;true&#39;, then the output is pretty printed. | 
 
 ### Return type
 
@@ -119,7 +125,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: Not defined
  - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -134,17 +140,19 @@ create a SubjectAccessReview
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**V1beta1SubjectAccessReview**](V1beta1SubjectAccessReview.md)|  | 
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
+ **optional** | ***CreateSubjectAccessReviewOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
+Optional parameters are passed through a pointer to a CreateSubjectAccessReviewOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**V1beta1SubjectAccessReview**](V1beta1SubjectAccessReview.md)|  | 
- **pretty** | **string**| If &#39;true&#39;, then the output is pretty printed. | 
+
+ **dryRun** | **optional.String**| When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed | 
+ **includeUninitialized** | **optional.Bool**| If IncludeUninitialized is specified, the object may be returned without completing initialization. | 
+ **pretty** | **optional.String**| If &#39;true&#39;, then the output is pretty printed. | 
 
 ### Return type
 
@@ -156,7 +164,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: Not defined
  - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -180,7 +188,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/yaml, application/vnd.kubernetes.protobuf
+ - **Content-Type**: Not defined
  - **Accept**: application/json, application/yaml, application/vnd.kubernetes.protobuf
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

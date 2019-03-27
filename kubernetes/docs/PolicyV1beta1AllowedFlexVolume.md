@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Driver** | **string** | Driver is the name of the Flexvolume driver. | [default to null]
+**Driver** | **string** | driver is the name of the Flexvolume driver. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
