@@ -12,13 +12,15 @@ import (
 func makerFn() interface{} { return &V1Namespace{} }
 
 type staticHandler struct {
-	Code int
-	Body string
+	Code        int
+	Body        string
+	QueryParams url.Values
 }
 
 func (s *staticHandler) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	res.WriteHeader(s.Code)
 	res.Write([]byte(s.Body))
+	s.QueryParams = req.URL.Query()
 }
 
 func TestFullError(t *testing.T) {
@@ -43,7 +45,7 @@ func TestFullError(t *testing.T) {
 		MakerFn: makerFn,
 	}
 
-	if _, _, err := watch.Connect(context.Background()); err == nil {
+	if _, _, err := watch.Connect(context.Background(), ""); err == nil {
 		t.Error("unexpected nil error")
 	}
 }
@@ -70,7 +72,7 @@ func TestFull(t *testing.T) {
 		MakerFn: makerFn,
 	}
 
-	resultChan, errChan, err := watch.Connect(context.Background())
+	resultChan, errChan, err := watch.Connect(context.Background(), "")
 	if err != nil {
 		t.Errorf("unexpected error: %v", err)
 	}
@@ -97,6 +99,41 @@ func TestFull(t *testing.T) {
 	}
 	if len(outErrs) != 0 {
 		t.Errorf("unexpected errors: %v", outErrs)
+	}
+}
+
+func TestResourceVersion(t *testing.T) {
+	handler := &staticHandler{
+		Code: 200,
+		Body: `{"type":"ADDED","object":{"kind":"Namespace","apiVersion":"v1","metadata":{"name":"kube-system","selfLink":"/api/v1/namespaces/kube-system","uid":"164931a7-3d75-11e9-a0a0-2683b9459238","resourceVersion":"227","creationTimestamp":"2019-03-03T05:27:50Z","annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{},\"name\":\"kube-system\",\"namespace\":\"\"}}\n"}},"spec":{"finalizers":["kubernetes"]},"status":{"phase":"Active"}}}\n`,
+	}
+	server := httptest.NewServer(handler)
+	defer server.Close()
+
+	u, err := url.Parse(server.URL)
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+
+	cfg := &Configuration{}
+	cfg.Host = u.Host
+	cfg.Scheme = u.Scheme
+
+	watch := WatchClient{
+		Cfg:     cfg,
+		Client:  NewAPIClient(cfg),
+		MakerFn: makerFn,
+	}
+
+	version := "12345"
+	_, _, err = watch.Connect(context.Background(), version)
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+
+	versionOut := handler.QueryParams["resourceVersion"][0]
+	if versionOut != version {
+		t.Errorf("unexpected resource version %s vs %s", version, versionOut)
 	}
 }
 

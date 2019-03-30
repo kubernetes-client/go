@@ -23,9 +23,14 @@ type WatchClient struct {
 	MakerFn func() interface{}
 }
 
-// Connect initiates a watch to the server.  TODO: support watch from resource version
-func (w *WatchClient) Connect(ctx context.Context) (<-chan *Result, <-chan error, error) {
-	url := w.Cfg.Scheme + "://" + w.Cfg.Host + w.Path + "?watch=true"
+// Connect initiates a watch to the server.
+func (w *WatchClient) Connect(ctx context.Context, resourceVersion string) (<-chan *Result, <-chan error, error) {
+	params := []string{"watch=true"}
+	if len(resourceVersion) != 0 {
+		params = append(params, "resourceVersion="+resourceVersion)
+	}
+	queryStr := "?" + strings.Join(params, "&")
+	url := w.Cfg.Scheme + "://" + w.Cfg.Host + w.Path + queryStr
 	req, err := w.Client.prepareRequest(ctx, url, "GET", nil, nil, nil, nil, "", []byte{})
 	if err != nil {
 		return nil, nil, err

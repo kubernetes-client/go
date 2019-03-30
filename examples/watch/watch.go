@@ -38,7 +38,7 @@ func main() {
 		Path:    "/api/v1/namespaces",
 		MakerFn: func() interface{} { return &client.V1Namespace{} },
 	}
-	if resultChan, errChan, err := watch.Connect(context.Background()); err != nil {
+	if resultChan, errChan, err := watch.Connect(context.Background(), ""); err != nil {
 		panic(err)
 	} else {
 		for obj := range resultChan {
