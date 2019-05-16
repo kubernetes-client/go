@@ -1,6 +1,7 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"strconv"
@@ -60,8 +61,8 @@ func (l *KubeConfigLoader) refreshAzureToken() error {
 	token := adal.Token{
 		AccessToken:  l.user.AuthProvider.Config["access-token"],
 		RefreshToken: l.user.AuthProvider.Config["refresh-token"],
-		ExpiresIn:    l.user.AuthProvider.Config["expires-in"],
-		ExpiresOn:    l.user.AuthProvider.Config["expires-in"],
+		ExpiresIn:    json.Number(l.user.AuthProvider.Config["expires-in"]),
+		ExpiresOn:    json.Number(l.user.AuthProvider.Config["expires-in"]),
 	}
 	sptToken, err := adal.NewServicePrincipalTokenFromManualToken(*config, clientID, resource, token)
 	if err := sptToken.Refresh(); err != nil {
