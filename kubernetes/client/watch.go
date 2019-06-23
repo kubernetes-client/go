@@ -15,6 +15,10 @@ type Result struct {
 	Object interface{}
 }
 
+const Added = "ADDED"
+const Modified = "MODIFIED"
+const Deleted = "DELETED"
+
 // WatchClient is a client for Watching the Kubernetes API
 type WatchClient struct {
 	Cfg     *Configuration
