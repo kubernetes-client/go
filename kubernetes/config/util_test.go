@@ -21,7 +21,7 @@ import (
 	"reflect"
 	"testing"
 
-	"k8s.io/client/kubernetes/config/api"
+	"k8s.io/client-go/tools/clientcmd/api"
 )
 
 func TestSetUserWithName(t *testing.T) {

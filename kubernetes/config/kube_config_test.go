@@ -28,7 +28,7 @@ import (
 	"time"
 
 	"golang.org/x/oauth2"
-	"k8s.io/client/kubernetes/config/api"
+	"k8s.io/client-go/tools/clientcmd/api"
 )
 
 const (
