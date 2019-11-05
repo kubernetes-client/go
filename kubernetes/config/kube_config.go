@@ -28,8 +28,8 @@ import (
 	"strings"
 
 	"github.com/ghodss/yaml"
-	"github.com/kubernetes-client/go/kubernetes/client"
-	"github.com/kubernetes-client/go/kubernetes/config/api"
+	"k8s.io/client/kubernetes/client"
+	"k8s.io/client/kubernetes/config/api"
 )
 
 const (

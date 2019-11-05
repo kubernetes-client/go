@@ -22,8 +22,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/kubernetes-client/go/kubernetes/client"
-	"github.com/kubernetes-client/go/kubernetes/config"
+	"k8s.io/client/kubernetes/client"
+	"k8s.io/client/kubernetes/config"
 )
 
 func main() {

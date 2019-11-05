@@ -25,7 +25,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/kubernetes-client/go/kubernetes/client"
+	"k8s.io/client/kubernetes/client"
 )
 
 const (

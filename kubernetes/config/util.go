@@ -23,7 +23,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/kubernetes-client/go/kubernetes/config/api"
+	"k8s.io/client/kubernetes/config/api"
 )
 
 // DataOrFile reads content of data, or file's content if data doesn't exist
