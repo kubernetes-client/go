@@ -67,7 +67,7 @@ func InClusterConfig() (*client.Configuration, error) {
 		BasePath:      "https://" + net.JoinHostPort(host, port),
 		Host:          net.JoinHostPort(host, port),
 		Scheme:        "https",
-		DefaultHeader: map[string]string{"Authentication": "Bearer " + string(token)},
+		DefaultHeader: map[string]string{"Authorization": "Bearer " + string(token)},
 		UserAgent:     defaultUserAgent,
 		HTTPClient:    c,
 	}, nil
