@@ -36,7 +36,6 @@ supported versions of Kubernetes clusters.
 |                  | Kubernetes 1.10 | Kubernetes 1.13 |
 |------------------|-----------------|-----------------|
 | client 0.1.0a1   | ✓               |                 |
-|------------------|-----------------|-----------------|
 | client 0.2.0a1   |                 | ✓               |
 
 Key:
